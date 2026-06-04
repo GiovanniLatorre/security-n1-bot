@@ -1,0 +1,8 @@
+escalation_user: "your.name"
+
+accounts:
+  example:
+    profile: "readonly@your-org-example"
+    account_id: "000000000000"
+    guardduty_detector: null
+    dns_log_group: null

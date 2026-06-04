@@ -1,0 +1,46 @@
+routing_rules:
+  - name: "vpn_dns"
+    description: "GuardDuty DNS findings on VPN Pritunl instances"
+    match:
+      alert_type_contains:
+        - "EC2/DriveBySourceTraffic"
+        - "EC2/PhishingDomainRequest"
+        - "EC2/DNSDataExfiltration"
+        - "EC2/BitcoinTool"
+        - "EC2/CompromisedInstanceGroup"
+        - "AttackSequence:EC2"
+      instance_is_vpn: true
+    playbook: "vpn_dns"
+
+  - name: "databricks_ephemeral"
+    description: "GuardDuty findings on Databricks ephemeral workers"
+    match:
+      alert_type_contains:
+        - "EC2/DriveBySourceTraffic"
+        - "EC2/PhishingDomainRequest"
+        - "EC2/DNSDataExfiltration"
+      instance_tag_vendor: "Databricks"
+    playbook: "databricks_ephemeral"
+
+  - name: "cloudtrail_actions"
+    description: "Destructive actions detected via CloudTrail"
+    match:
+      alert_type_contains:
+        - "BackupVault"
+        - "DeleteRecoveryPoint"
+        - "Modification on AWS"
+    playbook: "cloudtrail_actions"
+
+  - name: "k8s_pods"
+    description: "Kubernetes pod issues"
+    match:
+      alert_type_contains:
+        - "Kubernetes"
+        - "pod issue"
+        - "ImagePullBackOff"
+        - "CrashLoopBackOff"
+    playbook: "k8s_pods"
+
+dns_context_window_minutes: 10
+dns_context_max_queries: 50
+ssm_command_timeout_seconds: 30
